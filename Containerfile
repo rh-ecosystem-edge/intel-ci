@@ -34,13 +34,13 @@ RUN python3.12 -m pip install kcli==${KCLI_VERSION} libvirt-python && \
     python3 -m pip install kcli==${KCLI_VERSION} libvirt-python || true
 
 # Get the source code in there
-WORKDIR /root/amd-ci
+WORKDIR /root/intel-ci
 
-ENV GOCACHE=/root/amd-ci/tmp/
+ENV GOCACHE=/root/intel-ci/tmp/
 ENV PATH="${PATH}:/opt/app-root/src/go/bin"
 
 # Defaults we want the image to run with, can be overridden
-ARG ARTIFACT_DIR=/root/amd-ci/test-results
+ARG ARTIFACT_DIR=/root/intel-ci/test-results
 ENV ARTIFACT_DIR="${ARTIFACT_DIR}"
 ENV TEST_TRACE=true
 ENV VERBOSE_LEVEL=100
@@ -56,7 +56,7 @@ RUN mkdir -p "${ARTIFACT_DIR}" && chmod 777 "${ARTIFACT_DIR}"
 RUN mkdir -p "${GOCACHE}" && chmod 777 "${GOCACHE}"
 # Make workspace writable for OpenShift's arbitrary user IDs
 # Note: SSH keys should NOT be in the image - they're mounted at runtime from secrets
-RUN chmod 777 /root/amd-ci -R
+RUN chmod 777 /root/intel-ci -R
 ARG GPU_OPERATOR_VERSION=v23.9.1
 
 ENTRYPOINT ["bash"] 
